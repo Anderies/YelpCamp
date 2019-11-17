@@ -4,6 +4,7 @@
   "description": "YelpCamp Udemy",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "ejs": "^2.7.2",
     "express": "^4.17.1",
     "request": "^2.88.0"
