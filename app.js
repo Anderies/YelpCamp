@@ -12,23 +12,25 @@ mongoose.connect('mongodb://localhost:27017/yelp_camp');
 // Schema SETUP
 var campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 var Campground = mongoose.model("Campground", campgroundSchema);
 
-// Campground.create(
-//     {
-//         name: " Granite Hill",
-//         image: "https://pixabay.com/get/54e6d0434957a514f6da8c7dda793f7f1636dfe2564c704c722c72d09f49c45f_340.jpg"
-//     }, function (err, campgrounds) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log("NEWLY CREATED CAMPGROUND : ");
-//             console.log(campgrounds);
-//         }
-//     });
+Campground.create(
+    {
+        name: " Granite Hill",
+        image: "https://pixabay.com/get/54e6d0434957a514f6da8c7dda793f7f1636dfe2564c704c722c72d09f49c45f_340.jpg",
+        description: "this is a huge granite hill,no water, beautifull granite"
+    }, function (err, campgrounds) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("NEWLY CREATED CAMPGROUND : ");
+            console.log(campgrounds);
+        }
+    });
 
 // Tell Express to use Body Parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,6 +44,7 @@ app.get("/", (req, res) => {
     res.render("landing");
 })
 
+// SHOW ALL THE CAMPGROUNDS
 app.get("/campgrounds", (req, res) => {
     // GET ALL CAMPGROUND FROM DB
     Campground.find({},function(err, allCampgrounds){
@@ -54,6 +57,7 @@ app.get("/campgrounds", (req, res) => {
    
 })
 
+// CREATE ROUTE to add Campground
 app.post("/campgrounds", (req, res) => {
     // res.send("YOU HIT THE POST REQUEST!");
     // get data from form and add  to campgrounds array
@@ -72,10 +76,20 @@ app.post("/campgrounds", (req, res) => {
     });    
 })
 
+// NEW - show to create new campground
 app.get("/campgrounds/new", (req, res) => {
     res.render("new.ejs")
 })
 
+app.get("/campgrounds/:id",function(req,res){
+    // find the campground with provided ID
+    // 
+    res.send("THIS WILL BE THE SHOW PAGE ONE DAY")
+
+})
+
+
 app.listen(port, process.env.IP, () => {
     console.log("YELP CAMP SERVER HAS STARTED !")
 })
+
